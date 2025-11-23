@@ -1,0 +1,11 @@
+{
+  "name": "dmg-download-proxy",
+  "entry": "src/index.ts",
+  "runtime": "typescript",
+  "routes": [
+    {
+      "path": "/dmgDownload",
+      "type": "exact"
+    }
+  ]
+}
