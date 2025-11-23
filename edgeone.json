@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "download": {
+      "path": "/download",
+      "function": "download.js"
+    }
+  },
+  "build": {
+    "command": "echo 'No build step required'"
+  }
+}
