@@ -1,0 +1,24 @@
+[
+    {
+        "build": "25A5338b",
+        "date": "2025-08-10T19:39:00",
+        "fileSize": 947487176,
+        "md5sum": "8f84b289f95e8f072985a702671fd047",
+        "name": "Kernel Debug Kit 26.0 build 25A5338b",
+        "seen": "2025-08-10T20:26:59Z",
+        "sha256sum": "4a3983ec87f6186bd3b9ffa0c3095c830f7ed92ed4abe02e4c24325c05aa57e6",
+        "url": "https://down.chengdu.simplehac.cn/d/SHOSS/macOS/RES/Kernel_Debug_Kit_26.0_build_25A5338b.dmg",
+        "version": "26.0"
+    },
+    {
+        "build": "25A5327h",
+        "date": "2025-08-10T19:39:00",
+        "fileSize": 953958609,
+        "md5sum": "375c1f6e31c254e5327c3f6b701e2866",
+        "name": "Kernel Debug Kit 26.0 build 25A5327h",
+        "seen": "2025-08-10T20:26:59Z",
+        "sha256sum": "b375628dc1927e90ee73b7276eca7c2915b6a721908a9314261a72f93d3ee372",
+        "url": "https://down.chengdu.simplehac.cn/d/SHOSS/macOS/RES/Kernel_Debug_Kit_26.0_build_25A5327h.dmg",
+        "version": "26.0"
+    }
+]
