@@ -5,7 +5,8 @@ const CONFIG = {
 };
 
 export async function onRequest(context) {
-
+    const { request } = context;
+    
     // 设置响应头
     const headers = {
         'Content-Type': 'application/json'
@@ -13,6 +14,7 @@ export async function onRequest(context) {
 
     try {
         // 获取查询参数
+        const url = new URL(request.url);
         const searchParams = url.searchParams;
         const encoded_filename = searchParams.get('origin');
         const signature = searchParams.get('sign');
