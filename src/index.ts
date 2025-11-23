@@ -1,33 +1,35 @@
 // src/index.ts
-import { Hono } from 'hono';
-import { createHash } from 'node:crypto';
+import { createHash } from "node:crypto";
 
-const app = new Hono();
+// ========= 配置区（和你的 PHP 完全一致）=========
+const SECRET_TOKEN = "oclpmod";
+const DOWNLOAD_BASE_URL =
+  "https://down.chengdu.simplehac.cn/d/SHOSS/macOS/DMG/";
 
-// ============ 配置区（和 PHP 一模一样）============
-const SECRET_TOKEN = 'oclpmod';
-const DOWNLOAD_BASE_URL = 'https://down.chengdu.simplehac.cn/d/SHOSS/macOS/DMG/';
+// 读取 aeskey.txt（EdgeOne 支持相对路径）
+const AES_KEY = await Deno.readTextFile("./data/aeskey.txt").then(t => t.trim());
 
-// 读取同目录下的 aeskey.txt（EdgeOne 支持相对路径读取文件）
-const AES_KEY = await Deno.readTextFile(`${Deno.cwd()}/DMG/data/aeskey.txt`).then(t => t.trim());
+// 主函数
+export default async function (request: Request): Promise<Response> {
+  const url = new URL(request.url);
+  
+  // 只处理 /dmgDownload 这个路径
+  if (!url.pathname.endsWith("/dmgDownload")) {
+    return new Response("Not Found", { status: 404 });
+  }
 
-// 你的路径：/dmgDownload
-app.get('/dmgDownload', async (c) => {
-  const url = new URL(c.req.url);
-  const params = url.searchParams;
+  const origin = url.searchParams.get("origin");
+  const sign = url.searchParams.get("sign");
+  const t = url.searchParams.get("t");
 
-  const origin = params.get('origin');
-  const sign = params.get('sign');
-  const t = params.get('t');
-
-  // 调试信息（上线后可以注释掉）
+  // 调试信息（上线后可以删掉）
   const debug: any = {
     received_params: { origin, sign, t },
-    server_info: { time: Math.floor(Date.now() / 1000) }
+    server_time: Math.floor(Date.now() / 1000),
   };
 
   try {
-    // 1. 参数校验
+    // 1. 参数缺失
     if (!origin || !sign || !t) {
       throw new Error('{"error":"Missing required parameters"}');
     }
@@ -37,14 +39,13 @@ app.get('/dmgDownload', async (c) => {
       throw new Error('{"error":"Invalid timestamp"}');
     }
 
-    // 2. 签名校验 —— 完全和 PHP 一样：不 decode，保留 + 号！
+    // 2. 签名校验（关键：不 decode origin，保留 + 号，和 PHP 完全一致！）
     const signData = `${SECRET_TOKEN}${origin}${expireTime}${AES_KEY}`;
-    const expectedSign = createHash('md5').update(signData).digest('hex');
-
-    debug.sign_calculation = { sign_data: signData, expected_sign: expectedSign };
+    const expectedSign = createHash("md5").update(signData).digest("hex");
 
     if (sign !== expectedSign) {
-      debug.error = 'Signature mismatch';
+      debug.error = "Signature mismatch";
+      debug.sign_calculation = { signData, expectedSign };
       throw new Error(JSON.stringify(debug, null, 2));
     }
 
@@ -53,16 +54,14 @@ app.get('/dmgDownload', async (c) => {
       throw new Error('{"error":"Link expired"}');
     }
 
-    // 4. 成功 → 302 重定向（和原 PHP 完全一样）
-    const downloadUrl = `${DOWNLOAD_BASE_URL}${origin}`;
-    return c.redirect(downloadUrl, 302);
+    // 4. 成功 → 302 重定向
+    const downloadUrl = DOWNLOAD_BASE_URL + origin;
+    return Response.redirect(downloadUrl, 302);
 
   } catch (e: any) {
-    // 所有错误都返回 403 + 原样错误体
-    c.status(403);
-    return c.text(e.message, 403, { 'Content-Type': 'application/json' });
+    return new Response(e.message, {
+      status: 403,
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    });
   }
-});
-
-// EdgeOne 必须默认导出 fetch
-export default app;
+}

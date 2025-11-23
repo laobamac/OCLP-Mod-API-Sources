@@ -1,5 +1,5 @@
 {
-  "name": "dmg-download-proxy",
+  "name": "dmg-download",
   "entry": "src/index.ts",
   "runtime": "typescript",
   "routes": [
