@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCLP-Mod API 服务</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --accent: #4776e6;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: rgba(110, 72, 170, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(110, 72, 170, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(110, 72, 170, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .contact-box {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(110, 72, 170, 0.1) 0%, rgba(157, 80, 187, 0.1) 100%);
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .contact-box h3 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+        
+        .email {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--accent);
+            word-break: break-all;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--dark);
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        
+        .github-link svg {
+            margin-right: 0.5rem;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        .github-link:hover {
+            color: var(--primary);
+        }
+        
+        .animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo animation">API</div>
+            <h1>OCLP-Mod API 服务</h1>
+            <p class="subtitle">高效 · 稳定 · 可定制</p>
+            <a href="https://github.com/laobamac/OCLP-Mod" class="github-link" target="_blank">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+                访问 GitHub 项目
+            </a>
+        </header>
+        
+        <div class="card">
+            <h2>关于 OCLP-Mod API</h2>
+            <p>这是 OCLP-Mod 项目的专用 API 服务，为应用程序提供高效的数据处理和功能支持。</p>
+            <p>API 设计遵循 RESTful 架构风格，提供 JSON 格式的数据响应，支持多种功能模块的调用。</p>
+        </div>
+        
+        <div class="card">
+            <h2>重要说明</h2>
+            <p>本 API 服务<b>不直接对外开放访问</b>，仅供授权合作伙伴和开发者使用。</p>
+            <p>如果您有 API 调用需求或合作意向，请通过下方联系方式与我们取得联系，我们将为您提供详细的接口文档和技术支持。</p>
+            <div class="alert" style="background: rgba(220, 53, 69, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--danger);">
+                <strong>请注意：</strong>未经授权的 API 访问请求将被拒绝，并可能导致 IP 被封禁。
+            </div>
+        </div>
+        
+        <div class="contact-box">
+            <h3>联系开发者</h3>
+            <p>欢迎有合作意向的开发者或企业联系我们</p>
+            <p>邮箱：<span class="email">1694698985@qq.com</span></p>
+            <a href="mailto:1694698985@qq.com?subject=OCLP-Mod API 合作意向" class="btn">发送邮件</a>
+        </div>
+        
+        <footer>
+            <p>© 2025 OCLP-Mod @laobamac | 保留所有权利</p>
+            <p>开源地址：<a href="https://github.com/laobamac/OCLP-Mod" target="_blank">github.com/laobamac/OCLP-Mod</a></p>
+        </footer>
+    </div>
+</body>
+</html>
