@@ -2,11 +2,4 @@
 {
   "name": "edgeone-dmg-download",
   "version": "1.0.0",
-  "dependencies": {
-    "hono": "^4.6.3"
-  },
-  "devDependencies": {
-    "typescript": "^5.5.0",
-    "@hono/types": "^4.6.3"
-  }
 }
