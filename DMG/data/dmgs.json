@@ -1,210 +1,212 @@
-[
-    {
-        "title": "macOS Big Sur",
-        "version": "11.7.10",
-        "build": "20G1427",
-        "size": "13.07GB",
-        "releaseDate": "2025-04-29",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BBig%2BSur%2B11.7.10%2Bwith%2BOC103%26FirePE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Monterey",
-        "version": "12.7.4",
-        "build": "21H1123",
-        "size": "13.14GB",
-        "releaseDate": "2025-05-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BMonterey%2B12.7.4%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Ventura",
-        "version": "13.7.1",
-        "build": "22H221",
-        "size": "23.04GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.1%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Ventura",
-        "version": "13.7.3",
-        "build": "22H417",
-        "size": "12.97GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.3%2B22H417%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Ventura",
-        "version": "13.7.4",
-        "build": "22H420",
-        "size": "12.97GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.4%2B22H420%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Ventura",
-        "version": "13.7.5",
-        "build": "22H527",
-        "size": "13.07GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.5%2B22H527%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Ventura",
-        "version": "13.7.8",
-        "build": "22H730",
-        "size": "12.08GB",
-        "releaseDate": "2025-10-12",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.8%2B22H730_HackintoshClub.dmg"
-    },
-    {
-        "title": "macOS Sonoma",
-        "version": "14.7.1",
-        "build": "23H222",
-        "size": "14.42GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.1%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sonoma",
-        "version": "14.7.3",
-        "build": "23H417",
-        "size": "14.39GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.3%2B23H417%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macoS Sonoma",
-        "version": "14.7.4",
-        "build": "23H420",
-        "size": "14.39GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.4%2B23H420%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sonoma",
-        "version": "14.7.5",
-        "build": "23H527",
-        "size": "14.49GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.5%2B23H527%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sonoma",
-        "version": "14.8.1",
-        "build": "23J30",
-        "size": "13.50GB",
-        "releaseDate": "2025-10-12",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.8.1%2B23J30_HackintoshClub.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.0.1",
-        "build": "24A348",
-        "size": "16.76GB",
-        "releaseDate": "2025-05-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.0.1%2Bwith%2BOC1.0.2%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.1",
-        "build": "24B83",
-        "size": "15.28GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.1%2B24B83%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.1.1",
-        "build": "24B91",
-        "size": "15.27GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.1.1%2B24B91%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.2",
-        "build": "24C101",
-        "size": "15.96GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.2%2B24C101%2Bwith%2BOC1.0.3%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.3",
-        "build": "24D60",
-        "size": "15.93GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3%2B24D60%2Bwith%2BFirePE%2BOC103%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.3.1",
-        "build": "24D70",
-        "size": "15.93GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3.1%2B24D70%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.3.2",
-        "build": "24D81",
-        "size": "15.94GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3.2%2B24D81%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.4",
-        "build": "24E248",
-        "size": "16.37GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.4%2B24E248%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.4.1",
-        "build": "24E263",
-        "size": "15.39GB",
-        "releaseDate": "2025-04-09",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.4.1%2B24E263%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.5",
-        "build": "24F74",
-        "size": "16.43GB",
-        "releaseDate": "2025-05-25",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.5%2B24F74%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Sequoia",
-        "version": "15.7.1",
-        "build": "24G231",
-        "size": "15.42GB",
-        "releaseDate": "2025-10-12",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.7.1%2B24G231_HackintoshClub.dmg"
-    },
-    {
-        "title": "macOS Tahoe",
-        "version": "26.0",
-        "build": "25A354",
-        "size": "18.44GB",
-        "releaseDate": "2025-09-21",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.0%2B25A354%2Bwith%2BOC105%2BFirPE%2BSimpleHac.dmg"
-    },
-    {
-        "title": "macOS Tahoe",
-        "version": "26.0.1",
-        "build": "25A362",
-        "size": "16.72GB",
-        "releaseDate": "2025-10-12",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.0.1%2B25A362_HackintoshClub.dmg"
-    },
-    {
-        "title": "macOS Tahoe",
-        "version": "26.1",
-        "build": "25B78",
-        "size": "19.79GB",
-        "releaseDate": "2025-11-08",
-        "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.1%2B25B78%2Bwith%2BOC106%26FirPE%2BSimpleHac.dmg"
-    }
-]
+{"dmgFiles":
+    [
+        {
+            "title": "macOS Big Sur",
+            "version": "11.7.10",
+            "build": "20G1427",
+            "size": "13.07GB",
+            "releaseDate": "2025-04-29",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BBig%2BSur%2B11.7.10%2Bwith%2BOC103%26FirePE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Monterey",
+            "version": "12.7.4",
+            "build": "21H1123",
+            "size": "13.14GB",
+            "releaseDate": "2025-05-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BMonterey%2B12.7.4%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Ventura",
+            "version": "13.7.1",
+            "build": "22H221",
+            "size": "23.04GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.1%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Ventura",
+            "version": "13.7.3",
+            "build": "22H417",
+            "size": "12.97GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.3%2B22H417%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Ventura",
+            "version": "13.7.4",
+            "build": "22H420",
+            "size": "12.97GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.4%2B22H420%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Ventura",
+            "version": "13.7.5",
+            "build": "22H527",
+            "size": "13.07GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.5%2B22H527%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Ventura",
+            "version": "13.7.8",
+            "build": "22H730",
+            "size": "12.08GB",
+            "releaseDate": "2025-10-12",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BVentura%2B13.7.8%2B22H730_HackintoshClub.dmg"
+        },
+        {
+            "title": "macOS Sonoma",
+            "version": "14.7.1",
+            "build": "23H222",
+            "size": "14.42GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.1%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sonoma",
+            "version": "14.7.3",
+            "build": "23H417",
+            "size": "14.39GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.3%2B23H417%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macoS Sonoma",
+            "version": "14.7.4",
+            "build": "23H420",
+            "size": "14.39GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.4%2B23H420%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sonoma",
+            "version": "14.7.5",
+            "build": "23H527",
+            "size": "14.49GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.7.5%2B23H527%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sonoma",
+            "version": "14.8.1",
+            "build": "23J30",
+            "size": "13.50GB",
+            "releaseDate": "2025-10-12",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSonoma%2B14.8.1%2B23J30_HackintoshClub.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.0.1",
+            "build": "24A348",
+            "size": "16.76GB",
+            "releaseDate": "2025-05-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.0.1%2Bwith%2BOC1.0.2%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.1",
+            "build": "24B83",
+            "size": "15.28GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.1%2B24B83%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.1.1",
+            "build": "24B91",
+            "size": "15.27GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.1.1%2B24B91%2Bwith%2BOC1.0.2%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.2",
+            "build": "24C101",
+            "size": "15.96GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.2%2B24C101%2Bwith%2BOC1.0.3%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.3",
+            "build": "24D60",
+            "size": "15.93GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3%2B24D60%2Bwith%2BFirePE%2BOC103%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.3.1",
+            "build": "24D70",
+            "size": "15.93GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3.1%2B24D70%2Bwith%2BOC103%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.3.2",
+            "build": "24D81",
+            "size": "15.94GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.3.2%2B24D81%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.4",
+            "build": "24E248",
+            "size": "16.37GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.4%2B24E248%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.4.1",
+            "build": "24E263",
+            "size": "15.39GB",
+            "releaseDate": "2025-04-09",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.4.1%2B24E263%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.5",
+            "build": "24F74",
+            "size": "16.43GB",
+            "releaseDate": "2025-05-25",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.5%2B24F74%2Bwith%2BOC104%26FirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Sequoia",
+            "version": "15.7.1",
+            "build": "24G231",
+            "size": "15.42GB",
+            "releaseDate": "2025-10-12",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BSequoia%2B15.7.1%2B24G231_HackintoshClub.dmg"
+        },
+        {
+            "title": "macOS Tahoe",
+            "version": "26.0",
+            "build": "25A354",
+            "size": "18.44GB",
+            "releaseDate": "2025-09-21",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.0%2B25A354%2Bwith%2BOC105%2BFirPE%2BSimpleHac.dmg"
+        },
+        {
+            "title": "macOS Tahoe",
+            "version": "26.0.1",
+            "build": "25A362",
+            "size": "16.72GB",
+            "releaseDate": "2025-10-12",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.0.1%2B25A362_HackintoshClub.dmg"
+        },
+        {
+            "title": "macOS Tahoe",
+            "version": "26.1",
+            "build": "25B78",
+            "size": "19.79GB",
+            "releaseDate": "2025-11-08",
+            "downloadUrl": "https:\/\/down.chengdu.simplehac.cn\/d\/SHOSS\/macOS\/DMG\/Install%2BmacOS%2BTahoe%2B26.1%2B25B78%2Bwith%2BOC106%26FirPE%2BSimpleHac.dmg"
+        }
+    ]
+}
