@@ -1,0 +1,14 @@
+
+{
+  "version": 1,
+  "routes": [
+    {
+      "path": "/api/dmgDownload",
+      "function": "dmgDownload"
+    },
+    {
+      "path": "/",
+      "file": "/index.html"
+    }
+  ]
+}
