@@ -4,14 +4,7 @@ const CONFIG = {
     DOWNLOAD_BASE_URL: 'https://down.chengdu.simplehac.cn/d/SHOSS/macOS/DMG/'
 };
 
-export async function handleHttpRequest(request, context) {
-    // 只处理特定路径的请求
-    const url = new URL(request.url);
-    
-    if (url.pathname !== '/dmgDownload') {
-        // 如果不是我们的目标路径，继续正常处理
-        return await fetch(request);
-    }
+export async function onRequest(context) {
 
     // 设置响应头
     const headers = {
