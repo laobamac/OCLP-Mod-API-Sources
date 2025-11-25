@@ -1,0 +1,108 @@
+name: Update KDK & Metallib Manifest Mirror
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update manifests (only check body for "failed link")
+        run: |
+          python - <<'PY'
+          import json
+          import ssl
+          from urllib.request import Request, urlopen
+          from pathlib import Path
+          # 全局禁用 SSL 验证
+          ssl._create_default_https_context = ssl._create_unverified_context
+          MANIFESTS = [
+              {
+                  "name": "KdkSupportPkg",
+                  "src": "https://dortania.github.io/KdkSupportPkg/manifest.json",
+                  "dir": "KdkSupportPkg",
+                  "mirror": "https://down.chengdu.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/",
+                  "fallback": "https://gitapi.simplehac.top/"
+              },
+              {
+                  "name": "MetallibSupportPkg",
+                  "src": "https://dortania.github.io/MetallibSupportPkg/manifest.json",
+                  "dir": "MetallibSupportPkg",
+                  "mirror": "https://down.chengdu.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/MetalLib/",
+                  "fallback": "https://gitapi.simplehac.top/"
+              }
+          ]
+          def mirror_has_failed_link(url):
+              req = Request(url, method="GET")
+              req.add_header("Range", "bytes=0-0")
+              req.add_header("User-Agent", "curl/8.0")
+              try:
+                  with urlopen(req, timeout=25) as resp:
+                      body = resp.read(1024).decode("utf-8", errors="ignore")
+                      print(f"MIRROR_RESPONSE: {body.strip()}")
+                      return "failed link" in body.lower()
+              except Exception as e:
+                  print(f"MIRROR_EXCEPTION: {url} -> {e}")
+                  return True
+          for cfg in MANIFESTS:
+              print(f"\n=== Processing {cfg['name']} ===")
+              try:
+                  data = json.load(urlopen(cfg["src"], timeout=25))
+              except Exception as e:
+                  print(f"Failed to download source manifest: {e}")
+                  continue
+              if not data or "url" not in data[0]:
+                  print("No valid data")
+                  continue
+              latest = data[0]
+              orig_url = latest["url"]
+              filename = orig_url.split("/")[-1]
+              mirror_url = cfg["mirror"] + filename
+              print(f"Latest file: {filename}")
+              print(f"Testing mirror: {mirror_url}")
+              if mirror_has_failed_link(mirror_url):
+                  print("Detected 'failed link' in response → using gitapi fallback for latest item")
+                  use_fallback = True
+              else:
+                  print("Mirror looks healthy → using fast mirror")
+                  use_fallback = False
+              # 替换所有条目
+              for item in data:
+                  old = item.get("url", "")
+                  if not old:
+                      continue
+                  fname = old.split("/")[-1]
+                  if use_fallback and item is latest:
+                      item["url"] = cfg["fallback"] + old
+                      print(f"  [Fallback] Latest → {item['url']}")
+                  else:
+                      item["url"] = cfg["mirror"] + fname
+              # 保存
+              Path(cfg["dir"]).mkdir(exist_ok=True)
+              out_path = Path(cfg["dir"]) / "manifest.json"
+              with open(out_path, "w", encoding="utf-8") as f:
+                  json.dump(data, f, indent=2, ensure_ascii=False, separators=(',', ': '))
+                  f.write("\n")
+              print(f"Saved → {out_path}\n")
+          PY
+      - name: Commit & Push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add KdkSupportPkg/manifest.json MetallibSupportPkg/manifest.json || true
+          
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: update KDK & Metallib mirrors (fallback on 'failed link') [skip ci]"
+            git push
+            echo "Updated and pushed!"
+          fi
