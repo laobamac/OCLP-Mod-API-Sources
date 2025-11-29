@@ -28,14 +28,14 @@ jobs:
                   "name": "KdkSupportPkg",
                   "src": "https://dortania.github.io/KdkSupportPkg/manifest.json",
                   "dir": "KdkSupportPkg",
-                  "mirror": "https://down.chengdu.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/",
+                  "mirror": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/",
                   "fallback": "https://gitapi.simplehac.top/"
               },
               {
                   "name": "MetallibSupportPkg",
                   "src": "https://dortania.github.io/MetallibSupportPkg/manifest.json",
                   "dir": "MetallibSupportPkg",
-                  "mirror": "https://down.chengdu.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/MetalLib/",
+                  "mirror": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/MetalLib/",
                   "fallback": "https://gitapi.simplehac.top/"
               }
           ]
