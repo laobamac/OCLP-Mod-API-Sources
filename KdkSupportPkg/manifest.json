@@ -45,7 +45,7 @@
     "name": "Kernel Debug Kit 26.3 build 25D5087f",
     "seen": "2025-12-16T17:28:43Z",
     "sha256sum": "8d47ae70eea23e5811c211b1485eb096a64b4364556d13aac399eb22e8d822b9",
-    "url": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/Kernel_Debug_Kit_26.3_build_25D5087f.dmg",
+    "url": "https://gitapi.simplehac.top/https://github.com/dortania/KdkSupportPkg/releases/download/25D5087f/Kernel_Debug_Kit_26.3_build_25D5087f.dmg",
     "version": "26.3"
   },
   {
