@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: '*/60 * * * *'
   workflow_dispatch:
+  push:  # 添加push触发
+    branches:
+      - main
+      - master
+    paths:
+      - 'scripts/**'  # 如果脚本有更新时触发
+      - '.github/workflows/**'  # 工作流文件更新时触发
 
 jobs:
   update:
@@ -13,6 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史记录，方便比较
 
       - name: Update manifests (add missing entries only)
         run: |
@@ -50,24 +59,6 @@ jobs:
                   return new_prefix + url[len(old_prefix):]
               return url
           
-          def get_entry_key(entry):
-              """根据文件名创建条目的唯一标识"""
-              url = entry.get("url", "")
-              filename = url.split("/")[-1] if url else ""
-              # 同时使用其他可能的关键字段
-              build = entry.get("build", "")
-              version = entry.get("version", "")
-              
-              if filename:
-                  return filename
-              elif build:
-                  return build
-              elif version:
-                  return version
-              else:
-                  # 作为最后手段，使用整个条目的JSON字符串
-                  return json.dumps(entry, sort_keys=True)
-          
           def get_entry_filename(entry):
               """从条目中提取文件名"""
               url = entry.get("url", "")
@@ -75,18 +66,27 @@ jobs:
                   return url.split("/")[-1]
               return ""
           
-          def find_matching_entry(entry, existing_entries):
-              """在现有条目中查找匹配的条目（基于文件名）"""
-              new_filename = get_entry_filename(entry)
-              if not new_filename:
-                  return None
-              
-              for existing in existing_entries:
-                  old_filename = get_entry_filename(existing)
-                  if old_filename == new_filename:
-                      return existing
-              
-              return None
+          def get_entry_date(entry):
+              """从条目中提取日期，用于排序"""
+              # 优先使用date字段
+              if "date" in entry:
+                  return entry["date"]
+              # 如果没有date字段，尝试从build或version中推断
+              if "build" in entry:
+                  return entry["build"]
+              if "version" in entry:
+                  return entry["version"]
+              # 最后使用文件名
+              filename = get_entry_filename(entry)
+              return filename
+          
+          def sort_manifest_entries(entries):
+              """按日期倒序排列条目（最新的在前面）"""
+              return sorted(
+                  entries, 
+                  key=lambda x: get_entry_date(x), 
+                  reverse=True
+              )
           
           has_changes = False
           
@@ -118,24 +118,22 @@ jobs:
                   print("No data in remote manifest")
                   continue
               
-              # 创建现有条目的文件名集合
+              # 创建现有条目的文件名集合和映射
               existing_filenames = set()
+              local_entry_map = {}  # 文件名 -> 条目
               for entry in local_data:
                   filename = get_entry_filename(entry)
                   if filename:
                       existing_filenames.add(filename)
+                      local_entry_map[filename] = entry
               
               print(f"Existing files: {len(existing_filenames)}")
               
-              # 准备合并后的数据
-              merged_data = []
-              added_entries = []
-              updated_entries = []
+              # 准备新的数据列表
+              new_entries = []  # 新添加的条目
+              existing_entries = []  # 已存在的条目
               
-              # 首先添加所有现有条目（保持原样）
-              merged_data.extend(local_data)
-              
-              # 检查远程条目，只添加缺失的
+              # 首先处理所有远程条目，按时间顺序
               for remote_entry in remote_data:
                   remote_filename = get_entry_filename(remote_entry)
                   
@@ -145,57 +143,51 @@ jobs:
                   
                   # 检查是否已存在
                   if remote_filename in existing_filenames:
-                      # 已存在，检查是否需要更新（例如其他字段变化）
-                      existing_entry = find_matching_entry(remote_entry, local_data)
-                      if existing_entry:
-                          # 比较除URL外的其他字段
-                          changed = False
-                          for key in remote_entry:
-                              if key == "url":
-                                  continue
-                              if key not in existing_entry or existing_entry[key] != remote_entry[key]:
-                                  changed = True
-                                  break
-                          
-                          if changed:
-                              # 创建更新后的条目，保持URL前缀不变
-                              updated_entry = remote_entry.copy()
-                              # 保留本地已有的URL（已经替换过前缀的）
-                              if "url" in existing_entry:
-                                  updated_entry["url"] = existing_entry["url"]
-                              else:
-                                  # 如果本地条目没有URL，则使用替换后的远程URL
-                                  updated_entry["url"] = replace_github_url(remote_entry.get("url", ""))
-                              
-                              # 更新现有条目
-                              for i, item in enumerate(merged_data):
-                                  if get_entry_filename(item) == remote_filename:
-                                      merged_data[i] = updated_entry
-                                      break
-                              
-                              updated_entries.append(remote_filename)
-                              print(f"  Updated existing entry: {remote_filename}")
+                      # 已存在，使用本地条目（保持URL不变）
+                      existing_entries.append(local_entry_map[remote_filename])
                       continue
                   
-                  # 这是一个新条目，添加到合并数据中
+                  # 这是一个新条目，添加到前面
                   new_entry = remote_entry.copy()
                   # 替换GitHub URL前缀
                   if "url" in new_entry:
                       new_entry["url"] = replace_github_url(new_entry["url"])
                   
-                  merged_data.append(new_entry)
+                  new_entries.append(new_entry)
                   added_entries.append(remote_filename)
                   print(f"  Added new entry: {remote_filename}")
+              
+              # 合并数据：新条目在前，现有条目在后
+              merged_data = []
+              
+              # 1. 先添加新条目
+              if new_entries:
+                  # 对新条目按时间倒序排序（最新的在前面）
+                  sorted_new_entries = sort_manifest_entries(new_entries)
+                  merged_data.extend(sorted_new_entries)
+                  print(f"Added {len(new_entries)} new entries (sorted by date)")
+              
+              # 2. 再添加现有条目（保持原顺序或重新排序）
+              if existing_entries:
+                  # 如果希望重新排序现有条目，可以启用下面的代码
+                  # sorted_existing_entries = sort_manifest_entries(existing_entries)
+                  # merged_data.extend(sorted_existing_entries)
+                  
+                  # 保持现有条目的原始顺序
+                  merged_data.extend(local_data)  # 使用完整的local_data保持所有条目
+                  print(f"Kept {len(local_data)} existing entries")
               
               # 检查是否有变化
               needs_update = False
               
-              if added_entries:
-                  print(f"Added {len(added_entries)} new entries: {', '.join(added_entries)}")
-                  needs_update = True
-              
-              if updated_entries:
-                  print(f"Updated {len(updated_entries)} existing entries: {', '.join(updated_entries)}")
+              # 简单对比：如果新条目的数量有变化，就需要更新
+              if len(new_entries) > 0:
+                  print(f"New entries to add: {len(new_entries)}")
+                  
+                  # 显示新添加的文件名
+                  new_filenames = [get_entry_filename(entry) for entry in new_entries]
+                  print(f"New files: {', '.join(new_filenames)}")
+                  
                   needs_update = True
               
               # 如果有变化，保存新的manifest
@@ -226,17 +218,50 @@ jobs:
               print("No changes in any manifest")
           PY
       
+      - name: Check if commit is needed
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes detected"
+            echo "should_commit=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected"
+            echo "should_commit=true" >> $GITHUB_OUTPUT
+            
+            # 显示具体的变更
+            echo "=== Changes summary ==="
+            git diff --stat
+            echo ""
+            echo "=== Detailed changes ==="
+            git diff
+          fi
+      
       - name: Commit & Push if changed
+        if: steps.check-changes.outputs.should_commit == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add KdkSupportPkg/manifest.json MetallibSupportPkg/manifest.json || true
+          # 添加所有变更的manifest文件
+          for dir in KdkSupportPkg MetallibSupportPkg; do
+            if [ -f "$dir/manifest.json" ]; then
+              git add "$dir/manifest.json"
+              echo "Added $dir/manifest.json to staging"
+            fi
+          done
           
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
+          # 获取当前触发的事件类型
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            commit_msg="chore: auto-update KDK & Metallib manifests after push [skip ci]"
           else
-            git commit -m "chore: add missing entries to KDK & Metallib manifests [skip ci]"
-            git push
-            echo "Updated and pushed!"
+            commit_msg="chore: auto-update KDK & Metallib manifests [skip ci]"
           fi
+          
+          git commit -m "$commit_msg"
+          git push
+          echo "Updated and pushed!"
+      
+      - name: Skip commit message
+        if: steps.check-changes.outputs.should_commit == 'false'
+        run: |
+          echo "No changes to commit, skipping push"
