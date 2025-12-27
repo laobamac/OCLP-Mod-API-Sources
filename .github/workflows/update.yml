@@ -6,8 +6,7 @@ on:
   workflow_dispatch:
   push:  # 添加push触发
     branches:
-      - main
-      - master
+      - OMAPIv2
     paths:
       - 'KdkSupportPkg/**'  # 如果脚本有更新时触发
       - 'MetallibSupportPkg/**'  # 如果脚本有更新时触发
