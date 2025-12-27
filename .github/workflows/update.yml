@@ -131,7 +131,7 @@ jobs:
               
               # 准备新的数据列表
               new_entries = []  # 新添加的条目
-              existing_entries = []  # 已存在的条目
+              new_filenames = []  # 新添加的文件名
               
               # 首先处理所有远程条目，按时间顺序
               for remote_entry in remote_data:
@@ -143,71 +143,65 @@ jobs:
                   
                   # 检查是否已存在
                   if remote_filename in existing_filenames:
-                      # 已存在，使用本地条目（保持URL不变）
-                      existing_entries.append(local_entry_map[remote_filename])
+                      # 已存在，跳过
                       continue
                   
-                  # 这是一个新条目，添加到前面
+                  # 这是一个新条目
                   new_entry = remote_entry.copy()
                   # 替换GitHub URL前缀
                   if "url" in new_entry:
                       new_entry["url"] = replace_github_url(new_entry["url"])
                   
                   new_entries.append(new_entry)
-                  added_entries.append(remote_filename)
+                  new_filenames.append(remote_filename)
                   print(f"  Added new entry: {remote_filename}")
+              
+              # 如果没有新条目，直接跳过
+              if not new_entries:
+                  print(f"No new entries found for {cfg['name']}")
+                  continue
+              
+              # 对新条目按时间倒序排序（最新的在前面）
+              sorted_new_entries = sort_manifest_entries(new_entries)
+              print(f"Found {len(new_entries)} new entries")
+              print(f"New files: {', '.join(new_filenames)}")
               
               # 合并数据：新条目在前，现有条目在后
               merged_data = []
               
-              # 1. 先添加新条目
-              if new_entries:
-                  # 对新条目按时间倒序排序（最新的在前面）
-                  sorted_new_entries = sort_manifest_entries(new_entries)
-                  merged_data.extend(sorted_new_entries)
-                  print(f"Added {len(new_entries)} new entries (sorted by date)")
+              # 1. 先添加新条目（已排序）
+              merged_data.extend(sorted_new_entries)
               
-              # 2. 再添加现有条目（保持原顺序或重新排序）
-              if existing_entries:
-                  # 如果希望重新排序现有条目，可以启用下面的代码
-                  # sorted_existing_entries = sort_manifest_entries(existing_entries)
-                  # merged_data.extend(sorted_existing_entries)
-                  
-                  # 保持现有条目的原始顺序
-                  merged_data.extend(local_data)  # 使用完整的local_data保持所有条目
-                  print(f"Kept {len(local_data)} existing entries")
+              # 2. 再添加所有现有条目（保持原顺序）
+              # 注意：我们只添加本地中不存在于新条目中的条目
+              # 避免重复（理论上不应该有重复）
+              for local_entry in local_data:
+                  local_filename = get_entry_filename(local_entry)
+                  if local_filename not in new_filenames:  # 确保不重复
+                      merged_data.append(local_entry)
               
-              # 检查是否有变化
-              needs_update = False
+              print(f"Total entries after merge: {len(merged_data)}")
               
-              # 简单对比：如果新条目的数量有变化，就需要更新
-              if len(new_entries) > 0:
-                  print(f"New entries to add: {len(new_entries)}")
-                  
-                  # 显示新添加的文件名
-                  new_filenames = [get_entry_filename(entry) for entry in new_entries]
-                  print(f"New files: {', '.join(new_filenames)}")
-                  
-                  needs_update = True
+              # 检查总数是否正确
+              expected_total = len(local_data) + len(new_entries)
+              if len(merged_data) != expected_total:
+                  print(f"Warning: Entry count mismatch. Expected {expected_total}, got {len(merged_data)}")
+                  print("This might indicate duplicate entries.")
               
-              # 如果有变化，保存新的manifest
-              if needs_update:
-                  # 确保目录存在
-                  Path(cfg["dir"]).mkdir(exist_ok=True)
-                  
-                  # 保存新的manifest
-                  with open(local_path, "w", encoding="utf-8") as f:
-                      json.dump(merged_data, f, indent=2, ensure_ascii=False, separators=(',', ': '))
-                      f.write("\n")
-                  print(f"Updated manifest saved → {local_path}")
-                  print(f"Total entries: {len(merged_data)}")
-                  has_changes = True
-              else:
-                  print(f"No changes needed for {cfg['name']}")
+              # 确保目录存在
+              Path(cfg["dir"]).mkdir(exist_ok=True)
+              
+              # 保存新的manifest
+              with open(local_path, "w", encoding="utf-8") as f:
+                  json.dump(merged_data, f, indent=2, ensure_ascii=False, separators=(',', ': '))
+                  f.write("\n")
+              print(f"Updated manifest saved → {local_path}")
+              
+              has_changes = True
           
           if has_changes:
               print("\n=== Summary ===")
-              print("Manifests have been updated with missing entries")
+              print("Manifests have been updated with new entries")
               # 设置环境变量供后续步骤使用
               import sys
               sys.stdout.flush()
@@ -221,19 +215,32 @@ jobs:
       - name: Check if commit is needed
         id: check-changes
         run: |
-          if git diff --quiet; then
-            echo "No changes detected"
+          # 首先检查是否有文件被修改
+          if [ -z "$(git status --porcelain KdkSupportPkg/manifest.json MetallibSupportPkg/manifest.json 2>/dev/null)" ]; then
+            echo "No changes detected in manifest files"
             echo "should_commit=false" >> $GITHUB_OUTPUT
           else
-            echo "Changes detected"
+            echo "Changes detected in manifest files"
             echo "should_commit=true" >> $GITHUB_OUTPUT
             
             # 显示具体的变更
             echo "=== Changes summary ==="
-            git diff --stat
+            git status --porcelain
             echo ""
-            echo "=== Detailed changes ==="
-            git diff
+            echo "=== File changes ==="
+            for file in KdkSupportPkg/manifest.json MetallibSupportPkg/manifest.json; do
+              if [ -f "$file" ]; then
+                echo "--- $file ---"
+                # 检查文件是否在git中
+                if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+                  # 文件已在git中，显示差异
+                  git diff --stat "$file"
+                else
+                  # 新文件，显示内容预览
+                  echo "New file with $(wc -l < "$file") lines"
+                fi
+              fi
+            done
           fi
       
       - name: Commit & Push if changed
@@ -250,11 +257,38 @@ jobs:
             fi
           done
           
-          # 获取当前触发的事件类型
+          # 获取变更的文件列表用于提交信息
+          changed_files=$(git diff --name-only --cached)
+          echo "Changed files: $changed_files"
+          
+          # 统计新增条目数量
+          new_entries_info=""
+          for dir in KdkSupportPkg MetallibSupportPkg; do
+            if [ -f "$dir/manifest.json" ]; then
+              # 如果是第一次提交或者文件是新的，跳过统计
+              if git ls-files --error-unmatch "$dir/manifest.json" >/dev/null 2>&1; then
+                # 计算新旧行数差异
+                old_lines=$(git diff --unified=0 HEAD "$dir/manifest.json" | grep '^+' | wc -l || echo "0")
+                if [ "$old_lines" -gt 10 ]; then
+                  new_entries_info="${new_entries_info} $dir"
+                fi
+              fi
+            fi
+          done
+          
+          # 生成提交信息
           if [[ "${{ github.event_name }}" == "push" ]]; then
-            commit_msg="chore: auto-update KDK & Metallib manifests after push [skip ci]"
+            if [ -n "$new_entries_info" ]; then
+              commit_msg="chore: add new entries to${new_entries_info} manifests after push [skip ci]"
+            else
+              commit_msg="chore: update manifests after push [skip ci]"
+            fi
           else
-            commit_msg="chore: auto-update KDK & Metallib manifests [skip ci]"
+            if [ -n "$new_entries_info" ]; then
+              commit_msg="chore: add new entries to${new_entries_info} manifests [skip ci]"
+            else
+              commit_msg="chore: update manifests [skip ci]"
+            fi
           fi
           
           git commit -m "$commit_msg"
