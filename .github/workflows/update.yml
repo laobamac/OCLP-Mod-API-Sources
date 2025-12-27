@@ -9,7 +9,8 @@ on:
       - main
       - master
     paths:
-      - 'scripts/**'  # 如果脚本有更新时触发
+      - 'KdkSupportPkg/**'  # 如果脚本有更新时触发
+      - 'MetallibSupportPkg/**'  # 如果脚本有更新时触发
       - '.github/workflows/**'  # 工作流文件更新时触发
 
 jobs:
