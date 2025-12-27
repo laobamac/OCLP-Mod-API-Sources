@@ -14,84 +14,218 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update manifests (only check body for "failed link")
+      - name: Update manifests (add missing entries only)
         run: |
           python - <<'PY'
           import json
           import ssl
-          from urllib.request import Request, urlopen
+          from urllib.request import urlopen
           from pathlib import Path
+          import os
+          
           # 全局禁用 SSL 验证
           ssl._create_default_https_context = ssl._create_unverified_context
+          
           MANIFESTS = [
               {
                   "name": "KdkSupportPkg",
                   "src": "https://dortania.github.io/KdkSupportPkg/manifest.json",
                   "dir": "KdkSupportPkg",
-                  "mirror": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/",
-                  "fallback": "https://gitapi.simplehac.top/"
+                  "dest": "KdkSupportPkg/manifest.json"
               },
               {
                   "name": "MetallibSupportPkg",
                   "src": "https://dortania.github.io/MetallibSupportPkg/manifest.json",
                   "dir": "MetallibSupportPkg",
-                  "mirror": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/MetalLib/",
-                  "fallback": "https://gitapi.simplehac.top/"
+                  "dest": "MetallibSupportPkg/manifest.json"
               }
           ]
-          def mirror_has_failed_link(url):
-              req = Request(url, method="GET")
-              req.add_header("Range", "bytes=0-0")
-              req.add_header("User-Agent", "curl/8.0")
-              try:
-                  with urlopen(req, timeout=25) as resp:
-                      body = resp.read(1024).decode("utf-8", errors="ignore")
-                      print(f"MIRROR_RESPONSE: {body.strip()}")
-                      return "failed link" in body.lower()
-              except Exception as e:
-                  print(f"MIRROR_EXCEPTION: {url} -> {e}")
-                  return True
+          
+          def replace_github_url(url):
+              """将 https://github.com/dortania 替换为 https://gitapi.simplehac.top/https://github.com/dortania"""
+              old_prefix = "https://github.com/dortania/"
+              new_prefix = "https://gitapi.simplehac.top/https://github.com/dortania/"
+              
+              if url.startswith(old_prefix):
+                  return new_prefix + url[len(old_prefix):]
+              return url
+          
+          def get_entry_key(entry):
+              """根据文件名创建条目的唯一标识"""
+              url = entry.get("url", "")
+              filename = url.split("/")[-1] if url else ""
+              # 同时使用其他可能的关键字段
+              build = entry.get("build", "")
+              version = entry.get("version", "")
+              
+              if filename:
+                  return filename
+              elif build:
+                  return build
+              elif version:
+                  return version
+              else:
+                  # 作为最后手段，使用整个条目的JSON字符串
+                  return json.dumps(entry, sort_keys=True)
+          
+          def get_entry_filename(entry):
+              """从条目中提取文件名"""
+              url = entry.get("url", "")
+              if url:
+                  return url.split("/")[-1]
+              return ""
+          
+          def find_matching_entry(entry, existing_entries):
+              """在现有条目中查找匹配的条目（基于文件名）"""
+              new_filename = get_entry_filename(entry)
+              if not new_filename:
+                  return None
+              
+              for existing in existing_entries:
+                  old_filename = get_entry_filename(existing)
+                  if old_filename == new_filename:
+                      return existing
+              
+              return None
+          
+          has_changes = False
+          
           for cfg in MANIFESTS:
               print(f"\n=== Processing {cfg['name']} ===")
+              
+              # 读取本地现有的manifest
+              local_path = Path(cfg["dest"])
+              local_data = []
+              if local_path.exists():
+                  try:
+                      with open(local_path, "r", encoding="utf-8") as f:
+                          local_data = json.load(f)
+                      print(f"Local manifest exists with {len(local_data)} entries")
+                  except Exception as e:
+                      print(f"Failed to read local manifest: {e}")
+                      local_data = []
+              
+              # 下载最新的manifest
               try:
-                  data = json.load(urlopen(cfg["src"], timeout=25))
+                  with urlopen(cfg["src"], timeout=25) as response:
+                      remote_data = json.load(response)
+                  print(f"Remote manifest has {len(remote_data)} entries")
               except Exception as e:
-                  print(f"Failed to download source manifest: {e}")
+                  print(f"Failed to download remote manifest: {e}")
                   continue
-              if not data or "url" not in data[0]:
-                  print("No valid data")
+              
+              if not remote_data:
+                  print("No data in remote manifest")
                   continue
-              latest = data[0]
-              orig_url = latest["url"]
-              filename = orig_url.split("/")[-1]
-              mirror_url = cfg["mirror"] + filename
-              print(f"Latest file: {filename}")
-              print(f"Testing mirror: {mirror_url}")
-              if mirror_has_failed_link(mirror_url):
-                  print("Detected 'failed link' in response → using gitapi fallback for latest item")
-                  use_fallback = True
-              else:
-                  print("Mirror looks healthy → using fast mirror")
-                  use_fallback = False
-              # 替换所有条目
-              for item in data:
-                  old = item.get("url", "")
-                  if not old:
+              
+              # 创建现有条目的文件名集合
+              existing_filenames = set()
+              for entry in local_data:
+                  filename = get_entry_filename(entry)
+                  if filename:
+                      existing_filenames.add(filename)
+              
+              print(f"Existing files: {len(existing_filenames)}")
+              
+              # 准备合并后的数据
+              merged_data = []
+              added_entries = []
+              updated_entries = []
+              
+              # 首先添加所有现有条目（保持原样）
+              merged_data.extend(local_data)
+              
+              # 检查远程条目，只添加缺失的
+              for remote_entry in remote_data:
+                  remote_filename = get_entry_filename(remote_entry)
+                  
+                  if not remote_filename:
+                      print(f"Warning: Remote entry has no filename: {remote_entry}")
                       continue
-                  fname = old.split("/")[-1]
-                  if use_fallback and item is latest:
-                      item["url"] = cfg["fallback"] + old
-                      print(f"  [Fallback] Latest → {item['url']}")
-                  else:
-                      item["url"] = cfg["mirror"] + fname
-              # 保存
-              Path(cfg["dir"]).mkdir(exist_ok=True)
-              out_path = Path(cfg["dir"]) / "manifest.json"
-              with open(out_path, "w", encoding="utf-8") as f:
-                  json.dump(data, f, indent=2, ensure_ascii=False, separators=(',', ': '))
-                  f.write("\n")
-              print(f"Saved → {out_path}\n")
+                  
+                  # 检查是否已存在
+                  if remote_filename in existing_filenames:
+                      # 已存在，检查是否需要更新（例如其他字段变化）
+                      existing_entry = find_matching_entry(remote_entry, local_data)
+                      if existing_entry:
+                          # 比较除URL外的其他字段
+                          changed = False
+                          for key in remote_entry:
+                              if key == "url":
+                                  continue
+                              if key not in existing_entry or existing_entry[key] != remote_entry[key]:
+                                  changed = True
+                                  break
+                          
+                          if changed:
+                              # 创建更新后的条目，保持URL前缀不变
+                              updated_entry = remote_entry.copy()
+                              # 保留本地已有的URL（已经替换过前缀的）
+                              if "url" in existing_entry:
+                                  updated_entry["url"] = existing_entry["url"]
+                              else:
+                                  # 如果本地条目没有URL，则使用替换后的远程URL
+                                  updated_entry["url"] = replace_github_url(remote_entry.get("url", ""))
+                              
+                              # 更新现有条目
+                              for i, item in enumerate(merged_data):
+                                  if get_entry_filename(item) == remote_filename:
+                                      merged_data[i] = updated_entry
+                                      break
+                              
+                              updated_entries.append(remote_filename)
+                              print(f"  Updated existing entry: {remote_filename}")
+                      continue
+                  
+                  # 这是一个新条目，添加到合并数据中
+                  new_entry = remote_entry.copy()
+                  # 替换GitHub URL前缀
+                  if "url" in new_entry:
+                      new_entry["url"] = replace_github_url(new_entry["url"])
+                  
+                  merged_data.append(new_entry)
+                  added_entries.append(remote_filename)
+                  print(f"  Added new entry: {remote_filename}")
+              
+              # 检查是否有变化
+              needs_update = False
+              
+              if added_entries:
+                  print(f"Added {len(added_entries)} new entries: {', '.join(added_entries)}")
+                  needs_update = True
+              
+              if updated_entries:
+                  print(f"Updated {len(updated_entries)} existing entries: {', '.join(updated_entries)}")
+                  needs_update = True
+              
+              # 如果有变化，保存新的manifest
+              if needs_update:
+                  # 确保目录存在
+                  Path(cfg["dir"]).mkdir(exist_ok=True)
+                  
+                  # 保存新的manifest
+                  with open(local_path, "w", encoding="utf-8") as f:
+                      json.dump(merged_data, f, indent=2, ensure_ascii=False, separators=(',', ': '))
+                      f.write("\n")
+                  print(f"Updated manifest saved → {local_path}")
+                  print(f"Total entries: {len(merged_data)}")
+                  has_changes = True
+              else:
+                  print(f"No changes needed for {cfg['name']}")
+          
+          if has_changes:
+              print("\n=== Summary ===")
+              print("Manifests have been updated with missing entries")
+              # 设置环境变量供后续步骤使用
+              import sys
+              sys.stdout.flush()
+              with open(os.environ['GITHUB_ENV'], 'a') as f:
+                  f.write('HAS_CHANGES=true\n')
+          else:
+              print("\n=== Summary ===")
+              print("No changes in any manifest")
           PY
+      
       - name: Commit & Push if changed
         run: |
           git config user.name "github-actions[bot]"
@@ -100,9 +234,9 @@ jobs:
           git add KdkSupportPkg/manifest.json MetallibSupportPkg/manifest.json || true
           
           if git diff --staged --quiet; then
-            echo "No changes"
+            echo "No changes to commit"
           else
-            git commit -m "chore: update KDK & Metallib mirrors (fallback on 'failed link') [skip ci]"
+            git commit -m "chore: add missing entries to KDK & Metallib manifests [skip ci]"
             git push
             echo "Updated and pushed!"
           fi
