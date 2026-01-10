@@ -1,7 +1,7 @@
 {
     "version": "2026.01.10",
     "release_date": "2026-01-10",
-    "download_url": "https://node2.down.simplehac.cn/SKSP/SKSP_v2026.01.10.zip",
-    "sha256": "8be55d9f73975f958b8f9bb31945dcc268953cfa4ff0a5fb50f57debefdc43bb",
+    "download_url": "https://node2.down.simplehac.cn/d/SHOSS/SKSP/SKSP_v2026.01.10.zip",
+    "sha256": "5f2f08b2fcf71c6477150c49ea97f22b5df881d7d9adcee90cfd2a9102309ae6",
     "description": "更新于 2026-01-10，包含最新的 OpenCore 和驱动。"
 }
