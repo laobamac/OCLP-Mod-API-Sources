@@ -1,7 +1,7 @@
 {
-    "version": "1.0.0",
+    "version": "2026.01.10",
     "release_date": "2026-01-10",
-    "download_url": "https://node2.down.simplehac.cn/d/SHOSS/SKSP/SKSP_v1.0.0.zip",
-    "sha256": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z",
-    "description": "SimpleKaruzi 支持资源包 V1.0.0"
+    "download_url": "https://node2.down.simplehac.cn/SKSP/SKSP_v2026.01.10.zip",
+    "sha256": "8be55d9f73975f958b8f9bb31945dcc268953cfa4ff0a5fb50f57debefdc43bb",
+    "description": "更新于 2026-01-10，包含最新的 OpenCore 和驱动。"
 }
