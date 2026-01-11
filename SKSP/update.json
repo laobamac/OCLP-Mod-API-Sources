@@ -1,0 +1,9 @@
+{
+  "version": "1.0.1",
+  "date": "2023-10-27",
+  "changelog": "<h3>🔥 重大更新</h3><ul><li>修复了 SKSP 检查更新一直转圈的问题</li><li>优化了下载速度</li><li><b>新增</b>：支持从自定义源获取更新</li></ul><p>请务必更新以获得最佳体验。</p>",
+  "downloads": {
+    "win": "https://github.com/laobamac/SimpleKaruzi/releases/download/v1.0.1/SimpleKaruzi-Win.zip",
+    "mac": "https://node2.down.simplehac.cn/d/SHOSS/SKSP/SimpleKaruzi-macOS.zip"
+  }
+}
