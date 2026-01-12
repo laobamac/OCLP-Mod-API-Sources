@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0",
-  "date": "2026-01-11",
-  "changelog": "",
+  "version": "1.0.1",
+  "date": "2026-01-13",
+  "changelog": "修复了部分驱动下载链接失效的问题<br>修复了iASL组件不存在的问题<br>优化更新逻辑<br>优化PCI检测逻辑",
   "downloads": {
-    "win": "",
-    "mac": ""
+    "win": "https://node1.down.simplehac.cn/d/SHOSS/SKSP/SimpleKaruzi-v1.0.1-Windows.zip",
+    "mac": "https://node1.down.simplehac.cn/d/SHOSS/SKSP/SimpleKaruzi-v1.0.1-macOS.zip"
   }
 }

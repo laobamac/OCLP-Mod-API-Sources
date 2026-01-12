@@ -2,5 +2,5 @@
   "show": true,
   "type": "info",
   "title": "1月12日公告",
-  "message": "部分驱动下载链接失效，正在替换，下个版本修复。可以先手动下载一个缺失<br>的驱动放在<b>C:/Users/用户名/AppData/Roaming/SimpleKaruzi/OCK_Files</b>下"
+  "message": "大部分功能已恢复正常，感谢您的耐心等待。如有任何问题，请随时提出issue"
 }
