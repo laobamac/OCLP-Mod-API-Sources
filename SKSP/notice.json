@@ -1,6 +1,6 @@
 {
   "show": true,
   "type": "info",
-  "title": "致新用户",
-  "message": "测试远程公告：SimpleKaruzi是一个崭新的项目，我正在积极开发和完善它。如果你发现的程序Bug，请提出Issue！"
+  "title": "1月12日公告",
+  "message": "部分驱动下载链接失效，正在替换，下个版本修复。可以先手动下载一个缺失<br>的驱动放在<b>C:/Users/用户名/AppData/Roaming/SimpleKaruzi/OCK_Files</b>下"
 }
