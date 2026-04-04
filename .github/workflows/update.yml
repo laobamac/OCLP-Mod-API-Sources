@@ -2,7 +2,7 @@ name: Update KDK & Metallib Manifest Mirror
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */1 * * *'
   workflow_dispatch:
   push:  # 添加push触发
     branches:
