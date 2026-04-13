@@ -1,5 +1,14 @@
 [
   {
+    "build": "24G711",
+    "version": "15.7.6",
+    "date": "2026-04-13",
+    "sha1sum": "83efba930ae0f343da5ec72f2c30a7b6febd44e3",
+    "name": "MetallibSupportPkg 15.7.6 RC 2 build 24G711",
+    "seen": "2026-04-13",
+    "url": "https://gitapi.simplehac.top/https://github.com/dortania/MetallibSupportPkg/releases/download/15.7.6-24G711/MetallibSupportPkg-15.7.6-24G711.pkg"
+  },
+  {
     "build": "24G707",
     "version": "15.7.6",
     "date": "2026-03-30",
