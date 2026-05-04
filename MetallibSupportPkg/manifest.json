@@ -1,5 +1,14 @@
 [
   {
+    "build": "24G720",
+    "version": "15.7.7",
+    "date": "2026-05-04",
+    "sha1sum": "2bfcce10e7e547044f639b663ff8133228e053b6",
+    "name": "MetallibSupportPkg 15.7.7 RC 3 build 24G720",
+    "seen": "2026-05-04",
+    "url": "https://gitapi.simplehac.top/https://github.com/dortania/MetallibSupportPkg/releases/download/15.7.7-24G720/MetallibSupportPkg-15.7.7-24G720.pkg"
+  },
+  {
     "build": "24G718",
     "version": "15.7.7",
     "date": "2026-04-27",
