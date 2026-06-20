@@ -53,7 +53,7 @@ jobs:
           
           def replace_github_url(url):
               old_prefix = "https://github.com/dortania/"
-              new_prefix = "https://gitapi.simplehac.top/https://github.com/dortania/"
+              new_prefix = "https://proxy.yaoyaoling.net/https://github.com/dortania/"
               if url.startswith(old_prefix):
                   return new_prefix + url[len(old_prefix):]
               return url
