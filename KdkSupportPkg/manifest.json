@@ -51,7 +51,7 @@
     "name": "Kernel Debug Kit 26.6 build 25G5052e",
     "seen": "2026-06-29T18:30:29Z",
     "sha256sum": "9871ce154d92b5a0e3e262229a397313e0af6cd6f0af8737fdc75a086376aab8",
-    "url": "https://proxy.yaoyaoling.net/https://github.com/dortania/KdkSupportPkg/releases/download/25G5052e/Kernel_Debug_Kit_26.6_build_25G5052e.dmg",
+    "url": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/Kernel_Debug_Kit_26.6_build_25G5052e.dmg",
     "version": "26.6"
   },
   {
@@ -106,7 +106,7 @@
     "name": "Kernel Debug Kit 26.5.2 build 25F84",
     "seen": "2026-06-29T18:32:53Z",
     "sha256sum": "faef4393becf65c88a2791770904909babf1826d23d2ea478bf878a6417851ab",
-    "url": "https://proxy.yaoyaoling.net/https://github.com/dortania/KdkSupportPkg/releases/download/25F84/Kernel_Debug_Kit_26.5.2_build_25F84.dmg",
+    "url": "https://node1.down.simplehac.cn/d/SHOSS/OCLP-Mod-Sources/KernelDebugKit/Kernel_Debug_Kit_26.5.2_build_25F84.dmg",
     "version": "26.5.2"
   },
   {
