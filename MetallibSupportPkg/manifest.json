@@ -1,5 +1,13 @@
 [
   {
+    "build": "24H20",
+    "version": "15.8",
+    "date": "2026-08-24",
+    "name": "MetallibSupportPkg 15.8 RC 2 build 24H20",
+    "seen": "2026-11-02",
+    "url": "https://gitapi.simplehac.top/https://github.com/dortania/MetallibSupportPkg/releases/download/15.8-24H20/MetallibSupportPkg-15.8-24H20.pkg"
+  },
+  {
     "build": "24H22",
     "version": "15.8",
     "date": "2026-08-31",
